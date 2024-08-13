@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import ProductCard from '../components/ProductCard';
 
 // Fetch products from the API
 export async function getStaticProps() {
@@ -22,23 +22,7 @@ export default function Products({ products }) {
       <section>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => (
-            <div key={product.id} className="border rounded-lg overflow-hidden shadow-lg">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold">{product.title}</h3>
-                <p className="text-gray-700 mt-2">{product.description}</p>
-                <p className="text-xl font-bold mt-2">${product.price.toFixed(2)}</p>
-                <Link href={`/products/${product.id}`}>
-                  <span className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-lg cursor-pointer">
-                    View Details
-                  </span>
-                </Link>
-              </div>
-            </div>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>
