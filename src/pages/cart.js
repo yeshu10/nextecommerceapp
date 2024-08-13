@@ -1,35 +1,57 @@
 // src/pages/cart.js
+import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
+
 export default function Cart() {
-    // Example cart items
-    const cartItems = [
-      { id: 1, name: 'Product 1', price: 29.99, quantity: 1, image: '/images/sample-product.jpg' },
-    ];
-  
-    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = 0; // Apply any discount logic here
-    const total = subtotal - discount;
-  
-    return (
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold">Your Cart</h1>
-        {cartItems.map(item => (
-          <div key={item.id} className="border p-4 mb-4 flex items-center">
-            <img src={item.image} alt={item.name} className="w-24 h-24" />
-            <div className="ml-4 flex-grow">
-              <h2 className="text-xl">{item.name}</h2>
-              <p>${item.price.toFixed(2)}</p>
-              <p>Quantity: {item.quantity}</p>
+  const { cart, removeFromCart, updateQuantity } = useCart();
+
+  const handleRemove = (item) => {
+    removeFromCart(item);
+  };
+
+  const handleQuantityChange = (item, event) => {
+    const quantity = parseInt(event.target.value, 10);
+    if (quantity > 0) {
+      updateQuantity(item, quantity);
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">Shopping Cart</h1>
+      {cart.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <div>
+          {cart.map((item) => (
+            <div key={item.id} className="border rounded-lg p-4 mb-4 shadow-lg flex items-center">
+              <img src={item.image} alt={item.title} className="w-20 h-20 object-cover mr-4" />
+              <div className="flex-1">
+                <h2 className="text-xl font-semibold">{item.title}</h2>
+                <p className="text-gray-700">${item.price.toFixed(2)}</p>
+                <div className="mt-2 flex items-center">
+                  <label htmlFor={`quantity-${item.id}`} className="mr-2">Quantity:</label>
+                  <input
+                    type="number"
+                    id={`quantity-${item.id}`}
+                    value={item.quantity || 1}
+                    onChange={(event) => handleQuantityChange(item, event)}
+                    className="border rounded px-2 py-1"
+                  />
+                </div>
+              </div>
+              <button
+                onClick={() => handleRemove(item)}
+                className="bg-red-500 text-white py-2 px-4 rounded ml-4"
+              >
+                Remove
+              </button>
             </div>
-            <button className="bg-red-500 text-white py-1 px-3 rounded">Remove</button>
+          ))}
+          <div className="text-right mt-4">
+            <p className="text-xl font-bold">Total: ${cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0).toFixed(2)}</p>
           </div>
-        ))}
-        <div className="mt-4">
-          <h2 className="text-xl">Subtotal: ${subtotal.toFixed(2)}</h2>
-          <h2 className="text-xl">Discount: ${discount.toFixed(2)}</h2>
-          <h2 className="text-xl font-bold">Total: ${total.toFixed(2)}</h2>
-          <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4">Checkout</button>
         </div>
-      </div>
-    );
-  }
-  
+      )}
+    </div>
+  );
+}

@@ -1,34 +1,48 @@
-// context/CartContext.js
-import { createContext, useContext, useState } from 'react';
+// src/context/CartContext.js
+import React, { createContext, useContext, useReducer } from 'react';
 
 const CartContext = createContext();
 
-export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+const cartReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_TO_CART':
+      return { ...state, items: [...state.items, action.payload] };
+    case 'REMOVE_FROM_CART':
+      return { ...state, items: state.items.filter(item => item.id !== action.payload.id) };
+    case 'UPDATE_QUANTITY':
+      return {
+        ...state,
+        items: state.items.map(item =>
+          item.id === action.payload.id
+            ? { ...item, quantity: action.payload.quantity }
+            : item
+        ),
+      };
+    default:
+      return state;
+  }
+};
+
+export const CartProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(cartReducer, { items: [] });
 
   const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    dispatch({ type: 'ADD_TO_CART', payload: product });
   };
 
-  const removeFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter(item => item.id !== productId));
+  const removeFromCart = (product) => {
+    dispatch({ type: 'REMOVE_FROM_CART', payload: product });
   };
 
-  const updateQuantity = (productId, quantity) => {
-    setCart((prevCart) =>
-      prevCart.map(item =>
-        item.id === productId ? { ...item, quantity } : item
-      )
-    );
+  const updateQuantity = (product, quantity) => {
+    dispatch({ type: 'UPDATE_QUANTITY', payload: { id: product.id, quantity } });
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
+    <CartContext.Provider value={{ cart: state.items, addToCart, removeFromCart, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );
-}
+};
 
-export function useCart() {
-  return useContext(CartContext);
-}
+export const useCart = () => useContext(CartContext);
