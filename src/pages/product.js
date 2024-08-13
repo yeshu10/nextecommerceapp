@@ -39,7 +39,9 @@ export default function Products() {
                 <p className="text-gray-700 mt-2">{product.description}</p>
                 <p className="text-xl font-bold mt-2">${product.price.toFixed(2)}</p>
                 <Link href={`/products/${product.id}`}>
-                  <a className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-lg">View Details</a>
+                  <span className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-lg cursor-pointer">
+                    View Details
+                  </span>
                 </Link>
               </div>
             </div>

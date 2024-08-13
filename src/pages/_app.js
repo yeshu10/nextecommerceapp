@@ -1,14 +1,6 @@
 // src/pages/_app.js
-import '../styles/globals.css';
-import Header from '../components/Header';
+import '../styles/globals.css'; // Ensure global styles are imported
 
-function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Header />
-      <Component {...pageProps} />
-    </>
-  );
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
-
-export default MyApp;
