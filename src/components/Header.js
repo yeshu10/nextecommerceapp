@@ -21,10 +21,12 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-gradient-to-r from-pink-200 via-blue-200 to-green-200 text-gray-700 p-4">
+    <header className="bg-gradient-to-r from-pink-200 via-blue-100 to-custom-green text-gray-700 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center flex-grow">
+        <Link href="/">
           <h1 className="text-xl font-bold mr-4">Poshak</h1>
+          </Link>
           <form onSubmit={handleSearchSubmit} className="flex items-center flex-grow max-w-md">
             <input
               type="text"

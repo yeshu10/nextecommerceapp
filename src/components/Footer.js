@@ -14,7 +14,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-r from-pink-200 via-blue-200 to-green-200 text-gray-700 p-4">
+    <footer className="bg-gradient-to-r from-custom-green via-blue-200 to-pink-200 text-gray-700 p-4">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         <div className="flex flex-col items-center lg:items-start mb-4 lg:mb-0">
           <h2 className="text-xl font-bold mb-2">Poshak</h2>

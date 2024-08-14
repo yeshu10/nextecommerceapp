@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import { convertCurrency } from '../utils/currencyUtils'; // Ensure correct path
+import Link from 'next/link';
 
 export default function ProductCard({ product }) {
   const { addToCart, currentCurrency, exchangeRate } = useCart();
@@ -18,6 +19,7 @@ export default function ProductCard({ product }) {
   return (
     <div className="border rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
       {/* Product Image and Details */}
+      <Link href={`/products/${product.id}`}>
       <div className="flex-grow cursor-pointer">
         <div className="relative w-full h-48">
           <img
@@ -33,12 +35,13 @@ export default function ProductCard({ product }) {
           </p>
         </div>
       </div>
+      </Link>
 
       {/* Add to Cart Button */}
       <div className="p-4 bg-gray-100 mt-auto">
         <button
           onClick={() => addToCart(product)}
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg"
+          className="w-full bg-custom-green text-white py-2 px-4 rounded-lg"
         >
           Add to Cart
         </button>
