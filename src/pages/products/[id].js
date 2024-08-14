@@ -10,7 +10,11 @@ export default function ProductDetail({ product }) {
   }
 
   const handleAddToCart = () => {
-    addToCart({ ...product, quantity: 1 }); // Add product with default quantity of 1
+    // Determine the price in the current currency
+    const priceInCurrency = convertToCurrency(product.price);
+  
+    // Add the product to the cart with the correct price and quantity
+    addToCart({ ...product, quantity: 1, price: priceInCurrency });
   };
 
   return (

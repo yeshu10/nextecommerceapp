@@ -1,7 +1,18 @@
-import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/fa'; // Add other social icons as needed
+import { useState } from 'react';
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 import Link from 'next/link';
+import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
 
 export default function Footer() {
+  const { currentCurrency, switchCurrency } = useCart();
+  const [isUSD, setIsUSD] = useState(currentCurrency === 'USD');
+
+  const handleToggleCurrency = () => {
+    const newCurrency = isUSD ? 'INR' : 'USD';
+    switchCurrency(newCurrency);
+    setIsUSD(!isUSD);
+  };
+
   return (
     <footer className="bg-gradient-to-r from-pink-200 via-blue-200 to-green-200 text-gray-700 p-4">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
@@ -49,6 +60,12 @@ export default function Footer() {
             </li>
           </ul>
         </div>
+        <button
+          onClick={handleToggleCurrency}
+          className="bg-gray-800 text-white py-2 px-4 rounded mt-4 lg:mt-0"
+        >
+          {isUSD ? 'Switch to INR' : 'Switch to USD'}
+        </button>
       </div>
     </footer>
   );
