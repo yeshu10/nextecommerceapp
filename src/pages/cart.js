@@ -1,4 +1,3 @@
-// src/pages/cart.js
 import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
 
 export default function Cart() {
@@ -27,7 +26,7 @@ export default function Cart() {
               <img src={item.image} alt={item.title} className="w-20 h-20 object-cover mr-4" />
               <div className="flex-1">
                 <h2 className="text-xl font-semibold">{item.title}</h2>
-                <p className="text-gray-700">${item.price.toFixed(2)}</p>
+                <p className="text-gray-700">${Number(item.price).toFixed(2)}</p> {/* Ensure price is a number */}
                 <div className="mt-2 flex items-center">
                   <label htmlFor={`quantity-${item.id}`} className="mr-2">Quantity:</label>
                   <input
@@ -48,7 +47,7 @@ export default function Cart() {
             </div>
           ))}
           <div className="text-right mt-4">
-            <p className="text-xl font-bold">Total: ${cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0).toFixed(2)}</p>
+            <p className="text-xl font-bold">Total: ${cart.reduce((total, item) => total + (Number(item.price) * (item.quantity || 1)), 0).toFixed(2)}</p>
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
 import { fetchExchangeRates, convertCurrency } from '../utils/currencyUtils'; // Adjust the path based on your project structure
+import { toast } from 'react-toastify'; 
 
 const CartContext = createContext();
 
@@ -53,6 +54,19 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'UPDATE_QUANTITY', payload: { id: product.id, quantity } });
   };
 
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    toast.success(`${product.title} has been added to your cart!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const switchCurrency = (currency) => {
     if (currency === 'USD') {
       // Ensure we convert based on current exchange rate
@@ -76,6 +90,7 @@ export const CartProvider = ({ children }) => {
         cart: getCartItemsWithConvertedPrices(),
         addToCart,
         removeFromCart,
+        handleAddToCart,
         updateQuantity,
         switchCurrency,
         currentCurrency: state.currency,
