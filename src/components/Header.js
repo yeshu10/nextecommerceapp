@@ -1,4 +1,3 @@
-// src/components/Header.js
 import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
@@ -44,10 +43,10 @@ export default function Header() {
             <span className="text-black cursor-pointer">Products</span>
           </Link>
           <Link href="/cart">
-            <div className="relative text-black cursor-pointer">
-              <IoMdCart size={28} />
+            <div className="relative text-black cursor-pointer flex items-center">
+              <IoMdCart size={30} />
               {itemCount > 0 && (
-                <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
+                <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
                   {itemCount}
                 </span>
               )}
