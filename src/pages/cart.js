@@ -1,17 +1,38 @@
+// src/pages/cart.js
+import { useState } from 'react';
 import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
+import { useRouter } from 'next/router';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity } = useCart();
+  const [couponCode, setCouponCode] = useState('');
+  const [discount, setDiscount] = useState(0); // Discount in dollars
+  const [error, setError] = useState('');
+  const router = useRouter();
 
-  const handleRemove = (item) => {
-    removeFromCart(item);
+  // Calculate subtotal
+  const subtotal = cart.reduce((total, item) => total + (Number(item.price) * (item.quantity || 1)), 0);
+
+  // Handle coupon code application
+  const handleApplyCoupon = () => {
+    if (couponCode === 'DISCOUNT10') {
+      setDiscount(subtotal * 0.10); // 10% discount
+      setError('');
+    } else if (couponCode === 'FIXED10') {
+      setDiscount(10); // $10 discount
+      setError('');
+    } else {
+      setError('Invalid coupon code');
+      setDiscount(0);
+    }
   };
 
-  const handleQuantityChange = (item, event) => {
-    const quantity = parseInt(event.target.value, 10);
-    if (quantity > 0) {
-      updateQuantity(item, quantity);
-    }
+  // Calculate total after discount
+  const total = subtotal - discount;
+
+  // Handle checkout button click
+  const handleCheckout = () => {
+    router.push('/checkout'); // Navigate to the checkout page
   };
 
   return (
@@ -47,7 +68,35 @@ export default function Cart() {
             </div>
           ))}
           <div className="text-right mt-4">
-            <p className="text-xl font-bold">Total: ${cart.reduce((total, item) => total + (Number(item.price) * (item.quantity || 1)), 0).toFixed(2)}</p>
+            <p className="text-xl font-bold">Subtotal: ${subtotal.toFixed(2)}</p>
+            <div className="mt-2">
+              <input
+                type="text"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="Enter coupon code"
+                className="border rounded px-2 py-1"
+              />
+              <button
+                onClick={handleApplyCoupon}
+                className="bg-blue-500 text-white py-2 px-4 rounded ml-2"
+              >
+                Apply Coupon
+              </button>
+              {error && <p className="text-red-500 mt-2">{error}</p>}
+              {discount > 0 && (
+                <p className="text-green-500 mt-2">
+                  Discount: ${discount.toFixed(2)}
+                </p>
+              )}
+            </div>
+            <p className="text-xl font-bold mt-2">Total: ${total.toFixed(2)}</p>
+            <button
+              onClick={handleCheckout}
+              className="bg-green-500 text-white py-2 px-4 rounded mt-4"
+            >
+              Checkout
+            </button>
           </div>
         </div>
       )}
