@@ -26,20 +26,23 @@ export default function Header() {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center flex-grow">
           <h1 className="text-xl font-bold mr-4">Poshak</h1>
-          <form onSubmit={handleSearchSubmit} className="flex items-center flex-grow max-w-lg">
+          <form onSubmit={handleSearchSubmit} className="flex items-center flex-grow max-w-md">
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="p-2 rounded border border-white flex-grow"
+              className="p-2 rounded border border-white w-64" // Adjust the width here
             />
-            <button type="submit" className=" text-black p-2 rounded ml-2">
+            <button type="submit" className="text-black p-2 rounded ml-2">
               <AiOutlineSearch size={25} />
             </button>
           </form>
         </div>
-        <nav className="flex items-center">
+        <nav className="flex items-center space-x-4"> {/* Add space between nav items */}
+          <Link href="/product">
+            <span className="text-black cursor-pointer">Products</span>
+          </Link>
           <Link href="/cart">
             <div className="relative text-black cursor-pointer">
               <IoMdCart size={28} />
