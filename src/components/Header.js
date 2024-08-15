@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
-import { AiOutlineSearch } from 'react-icons/ai'; // Make sure to install react-icons if you haven't already
-import { IoMdCart } from "react-icons/io";
+import { useCart } from '../context/CartContext'; 
+import { AiOutlineSearch } from 'react-icons/ai'; 
+import { IoMdCart } from 'react-icons/io';
 
 export default function Header() {
   const { cart } = useCart();
@@ -22,10 +22,10 @@ export default function Header() {
 
   return (
     <header className="bg-gradient-to-r from-pink-200 via-blue-100 to-custom-green text-gray-700 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center flex-grow">
-        <Link href="/">
-          <h1 className="text-xl font-bold mr-4">Poshak</h1>
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div className="flex items-center flex-grow mb-4 md:mb-0">
+          <Link href="/">
+            <h1 className="text-xl font-bold mr-4">Poshak</h1>
           </Link>
           <form onSubmit={handleSearchSubmit} className="flex items-center flex-grow max-w-md">
             <input
@@ -33,7 +33,7 @@ export default function Header() {
               placeholder="Search..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="p-2 rounded border border-white w-64" // Adjust the width here
+              className="p-2 rounded border border-white w-full md:w-64" // Adjust the width here
             />
             <button type="submit" className="text-black p-2 rounded ml-2">
               <AiOutlineSearch size={25} />
