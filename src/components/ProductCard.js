@@ -24,12 +24,12 @@ export default function ProductCard({ product }) {
       {/* Product Image and Details */}
       <Link href={`/products/${product.id}`}>
         <div className="flex-grow cursor-pointer">
-          <div className="relative w-full h-48">
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-full h-full object-cover"
-            />
+          <div className="relative  w-full h-64">
+          <img
+  src={product.image}
+  alt={product.title}
+  className="w-full h-full object-contain p-2"
+/>
           </div>
           <div className="p-4">
             <h3 className="text-sm font-semibold">{product.title}</h3>
