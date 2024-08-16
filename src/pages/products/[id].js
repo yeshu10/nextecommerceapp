@@ -1,20 +1,23 @@
 import { useRouter } from 'next/router';
 import { useCart } from '../../context/CartContext'; // Adjust the path based on your project structure
+import { convertCurrency } from '../../utils/currencyUtils'; // Ensure correct path
 
 export default function ProductDetail({ product }) {
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { currentCurrency, addToCart } = useCart();
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
+  // Convert the price based on the current currency
+  const convertedPrice = currentCurrency === 'INR'
+    ? convertCurrency(product.price, true) // Convert from USD to INR
+    : convertCurrency(product.price, false); // Convert from INR to USD
+
   const handleAddToCart = () => {
-    // Determine the price in the current currency
-    const priceInCurrency = convertToCurrency(product.price);
-  
     // Add the product to the cart with the correct price and quantity
-    addToCart({ ...product, quantity: 1, price: priceInCurrency });
+    addToCart({ ...product, quantity: 1 });
   };
 
   return (
@@ -33,7 +36,9 @@ export default function ProductDetail({ product }) {
           <h1 className="text-3xl font-bold mb-2">{product.title}</h1>
           <p className="text-gray-700 mb-4 text-center lg:text-left">{product.description}</p>
           <div className="mb-4">
-            <p className="text-xl font-semibold">Price: ₹{product.price}</p>
+            <p className="text-xl font-semibold">
+              Price: {currentCurrency === 'INR' ? '₹' : '$'}{convertedPrice}
+            </p>
           </div>
           <button
             onClick={handleAddToCart}

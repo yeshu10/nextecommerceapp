@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
@@ -7,10 +7,14 @@ export default function Footer() {
   const { currentCurrency, switchCurrency } = useCart();
   const [isUSD, setIsUSD] = useState(currentCurrency === 'USD');
 
+  useEffect(() => {
+    // Sync state with currentCurrency from CartContext
+    setIsUSD(currentCurrency === 'USD');
+  }, [currentCurrency]);
+
   const handleToggleCurrency = () => {
     const newCurrency = isUSD ? 'INR' : 'USD';
     switchCurrency(newCurrency);
-    setIsUSD(!isUSD);
   };
 
   return (

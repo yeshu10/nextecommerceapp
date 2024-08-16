@@ -2,7 +2,10 @@ import React from 'react';
 import { convertCurrency } from '../utils/currencyUtils';
 
 const OrderSummary = ({ cart, currentCurrency, exchangeRate }) => {
+  // Calculate the total price before discount
   const totalBeforeDiscount = cart.reduce((total, item) => total + (Number(item.price) * (item.quantity || 1)), 0);
+
+  // Convert the total price based on the current currency
   const totalPrice = convertCurrency(totalBeforeDiscount, exchangeRate, currentCurrency === 'INR');
   
   // Ensure totalPrice is a number
@@ -21,7 +24,7 @@ const OrderSummary = ({ cart, currentCurrency, exchangeRate }) => {
               <div className="flex-1">
                 <h3 className="text-lg font-semibold">{item.title}</h3>
                 <p className="text-gray-700">
-                  {currentCurrency === 'INR' ? '₹' : '$'}{Number(item.price).toFixed(2)} x {item.quantity || 1}
+                  {currentCurrency === 'INR' ? '₹' : '$'}{convertCurrency(Number(item.price), exchangeRate, currentCurrency === 'INR')} x {item.quantity || 1}
                 </p>
               </div>
             </div>

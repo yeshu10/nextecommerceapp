@@ -1,35 +1,27 @@
 import React from 'react';
-import { useCart } from '../context/CartContext';
-import { convertCurrency } from '../utils/currencyUtils'; // Ensure correct path
+import { useCart } from '../context/CartContext'; // Ensure correct path
 import Link from 'next/link';
-import { toast } from 'react-toastify'; 
+import { convertCurrency } from '../utils/currencyUtils'; // Ensure correct path
 
 export default function ProductCard({ product }) {
-  const { addToCart, currentCurrency, exchangeRate ,handleAddToCart } = useCart();
-
- 
+  const { currentCurrency, handleAddToCart } = useCart();
 
   // Determine whether to convert the price based on the current currency
   const convertedPrice = currentCurrency === 'INR'
-    ? convertCurrency(product.price, exchangeRate, true) // Convert from USD to INR
-    : convertCurrency(product.price, exchangeRate, false); // Convert from INR to USD
-
-  console.log('Product:', product); // Debugging line
-  console.log('Current Currency:', currentCurrency); // Debugging line
-  console.log('Exchange Rate:', exchangeRate); // Debugging line
-  console.log('Converted Price:', convertedPrice); // Debugging line
+    ? convertCurrency(product.price, true) // Convert from USD to INR
+    : convertCurrency(product.price, false); // Convert from INR to USD
 
   return (
     <div className="border rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
       {/* Product Image and Details */}
       <Link href={`/products/${product.id}`}>
         <div className="flex-grow cursor-pointer">
-          <div className="relative  w-full h-64">
-          <img
-  src={product.image}
-  alt={product.title}
-  className="w-full h-full object-contain p-2"
-/>
+          <div className="relative w-full h-64">
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-full h-full object-contain p-2"
+            />
           </div>
           <div className="p-4">
             <h3 className="text-sm font-semibold">{product.title}</h3>
