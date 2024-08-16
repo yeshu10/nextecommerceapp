@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
+import Link from 'next/link';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity } = useCart();
@@ -95,12 +96,14 @@ export default function Cart() {
                 </p>
               )}
               <p className="text-xl font-bold">Total: ${total.toFixed(2)}</p>
-              <button
+              <Link href="/checkout">             <button
                 onClick={() => alert('Proceeding to checkout')}
                 className="bg-pink-600 text-white py-2 px-4 rounded mt-4"
               >
                 Checkout
               </button>
+              </Link>
+ 
             </div>
           </div>
         </div>
