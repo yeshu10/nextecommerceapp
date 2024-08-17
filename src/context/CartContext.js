@@ -1,10 +1,7 @@
 import React, { createContext, useContext, useReducer, useState } from 'react';
-import { convertCurrency } from '../utils/currencyUtils'; // Adjust the path based on your project structure
 import { toast } from 'react-toastify'; 
 
 const CartContext = createContext();
-
-const exchangeRateUSDToINR = 74.85; // Fixed exchange rate
 
 const cartReducer = (state, action) => {
   switch (action.type) {
@@ -61,18 +58,10 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'SET_CURRENCY', payload: { currency } });
   };
 
-  const getCartItemsWithConvertedPrices = () => {
-    const toINR = state.currency === 'INR';
-    return state.items.map(item => ({
-      ...item,
-      price: convertCurrency(item.price, exchangeRateUSDToINR, toINR)
-    }));
-  };
-
   return (
     <CartContext.Provider
       value={{
-        cart: getCartItemsWithConvertedPrices(),
+        cart: state.items,
         addToCart,
         removeFromCart,
         handleAddToCart,

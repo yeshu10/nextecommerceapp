@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import Link from 'next/link';
 
+const convertCurrency = (amount, toINR) => {
+  const conversionRate = toINR ? 75 : 0.013; // Example rates: 1 USD = 75 INR, 1 INR = 0.013 USD
+  return amount * conversionRate;
+};
+
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, currentCurrency } = useCart();
   const [couponCode, setCouponCode] = useState('');
@@ -10,18 +15,20 @@ export default function Cart() {
 
   const getCurrencySymbol = () => (currentCurrency === 'INR' ? '₹' : '$');
 
-  
-  const subtotal = cart.reduce(
-    (total, item) => total + (item.price * (item.quantity || 1)),
-    0
-  );
+  // Calculate subtotal with price conversion
+  const subtotal = cart.reduce((total, item) => {
+    const convertedPrice = currentCurrency === 'INR'
+      ? convertCurrency(item.price, true) // Convert from USD to INR
+      : convertCurrency(item.price, false); // Convert from INR to USD
+    return total + (convertedPrice * (item.quantity || 1));
+  }, 0);
 
   const handleApplyCoupon = () => {
     if (couponCode === 'DISCOUNT10') {
       setDiscount(subtotal * 0.10); // 10% discount
       setError('');
     } else if (couponCode === 'FIXED10') {
-      const fixedDiscount = currentCurrency === 'INR' ? 750 : 10; // ₹750 or $10 discount
+      const fixedDiscount = currentCurrency === 'INR' ? 750 : 10;  // ₹750 or $10 discount
       setDiscount(fixedDiscount);
       setError('');
     } else {
@@ -50,33 +57,40 @@ export default function Cart() {
         <p>Your cart is empty.</p>
       ) : (
         <div>
-          {cart.map((item) => (
-            <div key={item.id} className="border rounded-lg p-4 mb-4 shadow-lg flex items-center">
-              <img src={item.image} alt={item.title} className="w-20 h-20 object-cover mr-4" />
-              <div className="flex-1">
-                <h2 className="text-xl font-semibold">{item.title}</h2>
-                <p className="text-gray-700">
-                  {getCurrencySymbol()}{Number(item.price).toFixed(2)}
-                </p>
-                <div className="mt-2 flex items-center">
-                  <label htmlFor={`quantity-${item.id}`} className="mr-2">Quantity:</label>
-                  <input
-                    type="number"
-                    id={`quantity-${item.id}`}
-                    value={item.quantity || 1}
-                    onChange={(event) => handleQuantityChange(item, event)}
-                    className="border rounded px-2 py-1"
-                  />
+          {cart.map((item) => {
+            // Convert price based on current currency
+            const convertedPrice = currentCurrency === 'INR'
+              ? convertCurrency(item.price, true) // Convert from USD to INR
+              : convertCurrency(item.price, false); // Convert from INR to USD
+
+            return (
+              <div key={item.id} className="border rounded-lg p-4 mb-4 shadow-lg flex items-center">
+                <img src={item.image} alt={item.title} className="w-20 h-20 object-cover mr-4" />
+                <div className="flex-1">
+                  <h2 className="text-xl font-semibold">{item.title}</h2>
+                  <p className="text-gray-700">
+                    {getCurrencySymbol()}{Number(convertedPrice).toFixed(2)}
+                  </p>
+                  <div className="mt-2 flex items-center">
+                    <label htmlFor={`quantity-${item.id}`} className="mr-2">Quantity:</label>
+                    <input
+                      type="number"
+                      id={`quantity-${item.id}`}
+                      value={item.quantity || 1}
+                      onChange={(event) => handleQuantityChange(item, event)}
+                      className="border rounded px-2 py-1"
+                    />
+                  </div>
                 </div>
+                <button
+                  onClick={() => handleRemove(item)}
+                  className="bg-red-500 text-white py-2 px-4 rounded ml-4"
+                >
+                  Remove
+                </button>
               </div>
-              <button
-                onClick={() => handleRemove(item)}
-                className="bg-red-500 text-white py-2 px-4 rounded ml-4"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
+            );
+          })}
           <div className="flex justify-between mt-4">
             <div className="flex items-center">
               <input
@@ -104,7 +118,7 @@ export default function Cart() {
                 </p>
               )}
               <p className="text-xl font-bold">
-                Total: {getCurrencySymbol()}{(subtotal - discount).toFixed(2)}
+                Total: {getCurrencySymbol()}{(total).toFixed(2)}
               </p>
               <Link href="/checkout">
                 <button className="bg-pink-600 text-white py-2 px-4 rounded mt-4">
