@@ -45,24 +45,25 @@ export default function ProductCard({ product }) {
       </Link>
 
       {/* Add to Cart and Favorite Button */}
-      <div className="p-4 bg-gray-100 mt-auto flex items-center justify-between">
-        <button
-          onClick={() => handleAddToCart(product)}
-          className="bg-custom-green text-white py-2 px-4 rounded-lg"
-        >
-          Add to Cart
-        </button>
-        <button
-          onClick={toggleFavorite}
-          className="ml-4 text-2xl"
-        >
-          {isFavorited ? (
-            <AiFillHeart className="text-pink-500" /> // Filled heart icon when favorited
-          ) : (
-            <AiOutlineHeart className="text-gray-500" /> // Outline heart icon when not favorited
-          )}
-        </button>
-      </div>
+      <div className="p-4 bg-gray-100 mt-auto flex items-center">
+  <button
+    onClick={() => handleAddToCart(product)}
+    className="bg-custom-green text-white py-2 px-4 rounded-lg flex-1"
+  >
+    Add to Cart
+  </button>
+  <button
+    onClick={toggleFavorite}
+    className="ml-4 text-2xl"
+  >
+    {isFavorited ? (
+      <AiFillHeart className="text-pink-500" /> // Filled heart icon when favorited
+    ) : (
+      <AiOutlineHeart className="text-gray-500" /> // Outline heart icon when not favorited
+    )}
+  </button>
+</div>
+
     </div>
   );
 }

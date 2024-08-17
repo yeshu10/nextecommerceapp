@@ -21,7 +21,7 @@ export default function Wishlist() {
       {wishlist.length === 0 ? (
         <p>Your wishlist is empty.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {wishlist.map((item) => {
             // Convert price based on current currency
             const convertedPrice = currentCurrency === 'INR'
@@ -29,49 +29,48 @@ export default function Wishlist() {
               : convertCurrency(item.price, false); // Convert from INR to USD
 
             return (
-              <div key={item.id} className="relative border rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
+              <div key={item.id} className="relative border rounded-lg overflow-hidden shadow-lg flex flex-col">
                 {/* Remove Button */}
                 <button
                   onClick={() => removeFromWishlist(item)}
-                  className="absolute top-2 right-2 text-red-500 text-xl"
+                  className="absolute top-2 right-2 text-red-500 text-xl bg-white p-1 rounded-full shadow-md"
                 >
                   <FaTimes />
                 </button>
 
                 {/* Product Image and Details */}
                 <Link href={`/products/${item.id}`}>
-                  <div className="flex-grow cursor-pointer">
-                    <div className="relative w-full h-64">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-sm font-semibold">{item.title}</h3>
-                      <p className="text-sm font-bold mt-2">
-                        {getCurrencySymbol()}{Number(convertedPrice).toFixed(2)}
-                      </p>
-                    </div>
+                  <div className="flex-grow cursor-pointer flex items-center justify-center p-4">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="object-contain h-48 w-48" // Adjust size as needed
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold">{item.title}</h3>
+                    <p className="text-sm font-bold mt-2">
+                      {getCurrencySymbol()}{Number(convertedPrice).toFixed(2)}
+                    </p>
                   </div>
                 </Link>
 
                 {/* Add to Cart Button */}
                 <div className="p-4 bg-gray-100 mt-auto flex items-center justify-between">
-                  <button
-                    onClick={() => addToCart(item)}
-                    className="bg-custom-green text-white py-2 px-4 rounded-lg"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
+  <button
+    onClick={() => addToCart(item)}
+    className="bg-custom-green text-white py-2 px-4 rounded-lg w-full" // Set width to full
+  >
+    Add to Cart
+  </button>
+</div>
+
               </div>
             );
           })}
           <div className="flex justify-between mt-4">
             <div>
-              <Link href="/shop">
+              <Link href="/product">
                 <button className="bg-pink-600 text-white py-2 px-4 rounded mt-4">
                   Continue Shopping
                 </button>
