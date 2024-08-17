@@ -1,23 +1,28 @@
 import { useState } from 'react';
-import { useCart } from '../context/CartContext'; // Adjust the path based on your project structure
+import { useCart } from '../context/CartContext';
 import Link from 'next/link';
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQuantity } = useCart();
+  const { cart, removeFromCart, updateQuantity, currentCurrency } = useCart();
   const [couponCode, setCouponCode] = useState('');
-  const [discount, setDiscount] = useState(0); // Discount in dollars
+  const [discount, setDiscount] = useState(0);
   const [error, setError] = useState('');
 
-  // Calculate subtotal
-  const subtotal = cart.reduce((total, item) => total + (Number(item.price) * (item.quantity || 1)), 0);
+  const getCurrencySymbol = () => (currentCurrency === 'INR' ? '₹' : '$');
 
-  // Handle coupon code application
+  
+  const subtotal = cart.reduce(
+    (total, item) => total + (item.price * (item.quantity || 1)),
+    0
+  );
+
   const handleApplyCoupon = () => {
     if (couponCode === 'DISCOUNT10') {
       setDiscount(subtotal * 0.10); // 10% discount
       setError('');
     } else if (couponCode === 'FIXED10') {
-      setDiscount(10); // $10 discount
+      const fixedDiscount = currentCurrency === 'INR' ? 750 : 10; // ₹750 or $10 discount
+      setDiscount(fixedDiscount);
       setError('');
     } else {
       setError('Invalid coupon code');
@@ -25,7 +30,6 @@ export default function Cart() {
     }
   };
 
-  // Calculate total after discount
   const total = subtotal - discount;
 
   const handleQuantityChange = (item, event) => {
@@ -51,7 +55,9 @@ export default function Cart() {
               <img src={item.image} alt={item.title} className="w-20 h-20 object-cover mr-4" />
               <div className="flex-1">
                 <h2 className="text-xl font-semibold">{item.title}</h2>
-                <p className="text-gray-700">${Number(item.price).toFixed(2)}</p>
+                <p className="text-gray-700">
+                  {getCurrencySymbol()}{Number(item.price).toFixed(2)}
+                </p>
                 <div className="mt-2 flex items-center">
                   <label htmlFor={`quantity-${item.id}`} className="mr-2">Quantity:</label>
                   <input
@@ -88,22 +94,23 @@ export default function Cart() {
               </button>
             </div>
             <div className="text-right">
-              <p className="text-xl font-bold">Subtotal: ${subtotal.toFixed(2)}</p>
+              <p className="text-xl font-bold">
+                Subtotal: {getCurrencySymbol()}{subtotal.toFixed(2)}
+              </p>
               {error && <p className="text-red-500 mb-2">{error}</p>}
               {discount > 0 && (
                 <p className="text-green-500 mb-2 text-xl font-bold">
-                  Discount: ${discount.toFixed(2)}
+                  Discount: {getCurrencySymbol()}{discount.toFixed(2)}
                 </p>
               )}
-              <p className="text-xl font-bold">Total: ${total.toFixed(2)}</p>
-              <Link href="/checkout">             <button
-                onClick={() => alert('Proceeding to checkout')}
-                className="bg-pink-600 text-white py-2 px-4 rounded mt-4"
-              >
-                Checkout
-              </button>
+              <p className="text-xl font-bold">
+                Total: {getCurrencySymbol()}{(subtotal - discount).toFixed(2)}
+              </p>
+              <Link href="/checkout">
+                <button className="bg-pink-600 text-white py-2 px-4 rounded mt-4">
+                  Checkout
+                </button>
               </Link>
- 
             </div>
           </div>
         </div>

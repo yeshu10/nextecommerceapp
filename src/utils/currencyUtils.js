@@ -1,5 +1,5 @@
 const exchangeRateUSDToINR = 74.85; // Fixed exchange rate for USD to INR
-const exchangeRateINRToUSD = 1 / exchangeRateUSDToINR; // Inverse of the above for INR to USD
+
 
 /**
  * Converts a price from USD to INR or vice versa based on the fixed exchange rate.
@@ -11,6 +11,6 @@ export const convertCurrency = (price, toINR) => {
   if (toINR) {
     return parseFloat((price * exchangeRateUSDToINR).toFixed(2)); // Convert to number
   } else {
-    return parseFloat((price * exchangeRateINRToUSD).toFixed(2)); // Convert to number
+    return parseFloat((price / exchangeRateUSDToINR).toFixed(2)); // Convert to number
   }
 };
