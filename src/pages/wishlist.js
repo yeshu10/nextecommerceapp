@@ -21,7 +21,7 @@ export default function Wishlist() {
       {wishlist.length === 0 ? (
         <p>Your wishlist is empty.</p>
       ) : (
-        <div>
+        <div className="grid grid-cols-1 gap-4">
           {wishlist.map((item) => {
             // Convert price based on current currency
             const convertedPrice = currentCurrency === 'INR'
@@ -29,7 +29,7 @@ export default function Wishlist() {
               : convertCurrency(item.price, false); // Convert from INR to USD
 
             return (
-              <div key={item.id} className="relative border rounded-lg p-4 mb-4 shadow-lg flex items-center">
+              <div key={item.id} className="relative border rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
                 {/* Remove Button */}
                 <button
                   onClick={() => removeFromWishlist(item)}
@@ -37,19 +37,31 @@ export default function Wishlist() {
                 >
                   <FaTimes />
                 </button>
-                
+
                 {/* Product Image and Details */}
-                <img src={item.image} alt={item.title} className="w-20 h-20 object-cover mr-4" />
-                <div className="flex-1">
-                  <h2 className="text-xl font-semibold">{item.title}</h2>
-                  <p className="text-gray-700">
-                    {getCurrencySymbol()}{Number(convertedPrice).toFixed(2)}
-                  </p>
-                </div>
-                <div className="flex">
+                <Link href={`/products/${item.id}`}>
+                  <div className="flex-grow cursor-pointer">
+                    <div className="relative w-full h-64">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-sm font-semibold">{item.title}</h3>
+                      <p className="text-sm font-bold mt-2">
+                        {getCurrencySymbol()}{Number(convertedPrice).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Add to Cart Button */}
+                <div className="p-4 bg-gray-100 mt-auto flex items-center justify-between">
                   <button
                     onClick={() => addToCart(item)}
-                    className="bg-blue-500 text-white py-2 px-4 rounded mr-2"
+                    className="bg-custom-green text-white py-2 px-4 rounded-lg"
                   >
                     Add to Cart
                   </button>
