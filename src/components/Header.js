@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
-import { AiOutlineSearch, AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { IoMdCart } from 'react-icons/io';
 import { BsSun, BsMoon } from 'react-icons/bs';
+import { FaHeart } from "react-icons/fa";
+
 
 export default function Header() {
   const { cart } = useCart();
@@ -54,7 +56,7 @@ export default function Header() {
               <Link href="/product">Products</Link>
               <Link href="/wishlist">
                 <span className="flex items-center mt-2">
-                  <AiOutlineHeart className="text-pink-500 mr-2" />
+                  <FaHeart className="text-pink-500 mr-2" />
                   Wishlist
                 </span>
               </Link>
@@ -93,16 +95,15 @@ export default function Header() {
             <Link href="/product">Products</Link>
             <Link href="/wishlist">
               <span className="flex items-center">
-                <AiOutlineHeart className="text-pink-500 mr-2" />
-                Wishlist
+                <FaHeart size={24} className="text-pink-500 mr-2" />
               </span>
             </Link>
             <Link href="/cart">
               <span className="flex items-center">
                 <IoMdCart size={30} />
                 {itemCount > 0 && (
-                  <span className="ml-1 text-red-500 text-xs">
-                    ({itemCount})
+                <span className="absolute top-0 right-6 transform -translate-x-1 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
+                  {itemCount}
                   </span>
                 )}
               </span>
@@ -110,7 +111,7 @@ export default function Header() {
           </nav>
           <button
             onClick={toggleDarkMode}
-            className="text-2xl"
+            className="text-2xl ml-2"
           >
             {isDarkMode ? <BsMoon /> : <BsSun />}
           </button>
