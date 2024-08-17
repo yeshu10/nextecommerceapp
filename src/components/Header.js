@@ -54,6 +54,9 @@ export default function Header() {
               )}
             </div>
           </Link>
+          <Link href="/wishlist">
+            <span className="text-black cursor-pointer">Wishlist</span>
+          </Link>
         </nav>
       </div>
     </header>

@@ -66,9 +66,9 @@ export default function Footer() {
         </div>
         <button
           onClick={handleToggleCurrency}
-          className="bg-gray-800 text-white py-2 px-4 rounded mt-4 lg:mt-0"
+          className="bg-pink-600 text-white py-2 px-4 rounded mt-4 lg:mt-0 text-2xl"
         >
-          {isUSD ? 'Switch to INR' : 'Switch to USD'}
+          {isUSD ? ' ₹ ' : '  $'}
         </button>
       </div>
     </footer>
