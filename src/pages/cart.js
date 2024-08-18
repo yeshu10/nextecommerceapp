@@ -51,6 +51,7 @@ export default function Cart() {
       setError('Invalid coupon code');
       setDiscount(0);
     }
+    setShowCoupons(false);
   };
   
   
