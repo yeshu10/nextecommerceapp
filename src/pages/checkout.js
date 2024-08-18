@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { ThemeContext } from '../context/ThemeContext'; // Import ThemeContext
 
 export default function Checkout() {
-  const { cart, currentCurrency, exchangeRate } = useCart();
+  const { cart, currentCurrency, exchangeRate,clearCart} = useCart();
   const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext for dark mode
 
   const [customerInfo, setCustomerInfo] = useState({
@@ -28,6 +28,7 @@ export default function Checkout() {
   const handleConfirmOrder = () => {
     // Here, you would typically handle order confirmation logic, e.g., making an API call
     toast.success('Order placed successfully!');
+    clearCart();
   };
 
   return (

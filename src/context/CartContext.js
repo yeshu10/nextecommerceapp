@@ -9,6 +9,8 @@ const cartReducer = (state, action) => {
       return { ...state, items: [...state.items, action.payload] };
     case 'REMOVE_FROM_CART':
       return { ...state, items: state.items.filter(item => item.id !== action.payload.id) };
+    case 'CLEAR_CART':
+      return { ...state, items: [] };
     case 'UPDATE_QUANTITY':
       return {
         ...state,
@@ -58,6 +60,19 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'SET_CURRENCY', payload: { currency } });
   };
 
+  const clearCart = () => {
+    dispatch({ type: 'CLEAR_CART' });
+    toast.success('Your cart has been cleared!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -67,6 +82,7 @@ export const CartProvider = ({ children }) => {
         handleAddToCart,
         updateQuantity,
         switchCurrency,
+        clearCart,
         currentCurrency: state.currency,
         loading
       }}

@@ -29,15 +29,28 @@ export default function Cart() {
     if (couponCode === 'DISCOUNT10') {
       setDiscount(subtotal * 0.10); // 10% discount
       setError('');
-    } else if (couponCode === 'FIXED10') {
-      const fixedDiscount = currentCurrency === 'INR' ? 750 : 10;  // ₹750 or $10 discount
-      setDiscount(fixedDiscount);
+    } else if (couponCode === 'FIRST10') {
+      const first = subtotal * 0.10; ; // ₹750 or $10 discount
+      setDiscount(first);
+      setError('');
+    } else if (couponCode === 'FIXED') {
+      let discount = 0; // 10% discount
+  
+      if (currentCurrency === 'USD' && subtotal > 15) {
+        discount += 5; // Additional $5 discount if subtotal > $15
+      } else if (currentCurrency === 'INR' && subtotal > 5000) {
+        discount += 1000; // Additional ₹1000 discount if subtotal > ₹5000
+      }
+  
+      setDiscount(discount);
       setError('');
     } else {
       setError('Invalid coupon code');
       setDiscount(0);
     }
   };
+  
+  
 
   const total = subtotal - discount;
 
