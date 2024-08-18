@@ -124,7 +124,7 @@ export default function Cart() {
       onChange={(e) => setCouponCode(e.target.value)}
       onFocus={() => setShowCoupons(true)} // Show coupon list on input focus
       placeholder="Enter coupon code"
-      className="border rounded px-3 py-2 w-full md:w-auto"
+      className="border rounded px-3 py-2 w-full md:w-auto text-black"
     />
     <button
       onClick={handleApplyCoupon}
