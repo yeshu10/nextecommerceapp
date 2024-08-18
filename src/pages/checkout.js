@@ -39,7 +39,6 @@ export default function Checkout() {
           {/* Customer Information Form */}
           <div className="lg:w-1/2 mb-4 lg:mb-0">
             <div className={`p-4 shadow rounded-lg ${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-black'}`}>
-              <h2 className="text-2xl font-semibold mb-4">Customer Information</h2>
               <CustomerInfoForm customerInfo={customerInfo} setCustomerInfo={setCustomerInfo} />
             </div>
           </div>
@@ -48,7 +47,6 @@ export default function Checkout() {
           <div className="lg:w-1/2">
             {/* Order Summary */}
             <div className={`p-4 shadow rounded-lg mb-4 ${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-black'}`}>
-              <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
               <OrderSummary
                 cart={cart}
                 currentCurrency={currentCurrency}
@@ -58,7 +56,7 @@ export default function Checkout() {
 
             {/* Payment Information Form */}
             <div className={`p-4 shadow rounded-lg ${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-white text-black'}`}>
-              <h2 className="text-2xl font-semibold mb-4">Payment Information</h2>
+              
               <PaymentInfoForm paymentInfo={paymentInfo} setPaymentInfo={setPaymentInfo} />
             </div>
           </div>
