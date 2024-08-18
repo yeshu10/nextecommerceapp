@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa'; // Import the cross icon
 import { ThemeContext } from '../context/ThemeContext'; // Import ThemeContext
 
 const convertCurrency = (amount, toINR) => {
-  const conversionRate = toINR ? 75 : 0.013; // Example rates: 1 USD = 75 INR, 1 INR = 0.013 USD
+  const conversionRate = toINR ? 83.88 : 1; // Example rates: 1 USD = 75 INR, 1 INR = 0.013 USD
   return amount * conversionRate;
 };
 

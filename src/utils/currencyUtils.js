@@ -1,4 +1,4 @@
-const exchangeRateUSDToINR = 74.85; // Fixed exchange rate for USD to INR
+const exchangeRateUSDToINR = 83.88 ; // Fixed exchange rate for USD to INR
 
 
 /**
