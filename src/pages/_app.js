@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import { WishlistProvider } from '@/context/WishlistContext';
 import { ThemeProvider } from '@/context/ThemeContext';
+import 'slick-carousel/slick/slick.css';
 
 function MyApp({ Component, pageProps }) {
   return (
