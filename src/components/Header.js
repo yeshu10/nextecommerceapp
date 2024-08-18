@@ -77,7 +77,7 @@ export default function Header() {
         {/* Logo and Search */}
         <div className="flex items-center flex-grow">
           <Link href="/">
-            <h1 className="text-xl font-bold cursor-pointer ml-2 mr-2 dark:text-gray-200">Poshak</h1>
+            <h1 className="text-xl font-bold cursor-pointer ml-2 mr-2 dark:text-gray-200">NexGenShop</h1>
           </Link>
           <form onSubmit={handleSearchSubmit} className="flex items-center flex-grow max-w-md">
             <input

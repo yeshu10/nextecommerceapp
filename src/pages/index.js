@@ -25,7 +25,7 @@ export default function Home({ products }) {
 
   return (
     <div className={`w-full min-h-screen p-12 ${isDarkMode ? 'bg-gray-900 text-gray-200' : 'bg-white text-gray-900'}`}>
-      <h1 className="text-3xl font-bold mb-4">Welcome to Poshak</h1>
+      <h1 className="text-3xl font-bold mb-4">Welcome to NexGenShop</h1>
       
       {/* Carousel Component */}
       <div className="mt-4">

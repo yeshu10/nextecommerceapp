@@ -23,8 +23,8 @@ export default function Footer() {
     <footer className={`p-4 ${isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-gradient-to-r from-custom-green via-blue-200 to-pink-200 text-gray-700'}`}>
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         <div className="flex flex-col items-center lg:items-start mb-4 lg:mb-0">
-          <h2 className="text-xl font-bold mb-2">Poshak</h2>
-          <p className="text-sm">© 2024 Poshak. All rights reserved.</p>
+          <h2 className="text-xl font-bold mb-2">NexGenShop</h2>
+          <p className="text-sm">© 2024 NexGenShop. All rights reserved.</p>
         </div>
         <div className="flex flex-col lg:flex-row items-center lg:items-start mb-4 lg:mb-0">
           <div className="flex space-x-4 mb-4 lg:mb-0">
