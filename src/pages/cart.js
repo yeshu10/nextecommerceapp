@@ -14,6 +14,10 @@ export default function Cart() {
   const [couponCode, setCouponCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [error, setError] = useState('');
+  const [showCoupons, setShowCoupons] = useState(false); // New state for showing coupon options
+
+  const coupons = ['DISCOUNT10', 'FIRST10', 'FIXED']; // List of available coupons
+
 
   const getCurrencySymbol = () => (currentCurrency === 'INR' ? '₹' : '$');
 
@@ -63,12 +67,15 @@ export default function Cart() {
   const handleRemove = (item) => {
     removeFromCart(item);
   };
-
+  const handleCouponSelect = (coupon) => {
+    setCouponCode(coupon); // Set the selected coupon as the input value
+    setShowCoupons(false); // Hide the coupon list when a coupon is selected
+  };
   const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext for dark mode
   
   return (
     <div className={`${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'} min-h-screen`}>
-      <div className="container mx-auto p-4 rounded-lg shadow-lg">
+      <div className="w-full min-h-screen p-12">
         <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
@@ -108,42 +115,66 @@ export default function Cart() {
                 </div>
               );
             })}
-            <div className="flex flex-col md:flex-row justify-between mt-8">
-              <div className="flex items-center mb-4 md:mb-0">
-                <input
-                  type="text"
-                  value={couponCode}
-                  onChange={(e) => setCouponCode(e.target.value)}
-                  placeholder="Enter coupon code"
-                  className="border rounded px-3 py-2 mr-4"
-                />
-                <button
-                  onClick={handleApplyCoupon}
-                  className="bg-pink-400 text-white py-2 px-6 rounded"
-                >
-                  Apply Coupon
-                </button>
-              </div>
-              <div className="text-right">
-                <p className="text-xl font-bold mb-2">
-                  Subtotal: {getCurrencySymbol()}{subtotal.toFixed(2)}
-                </p>
-                {error && <p className="text-red-500 mb-2">{error}</p>}
-                {discount > 0 && (
-                  <p className="text-green-500 mb-2 text-xl font-bold">
-                    Discount: {getCurrencySymbol()}{discount.toFixed(2)}
-                  </p>
-                )}
-                <p className="text-xl font-bold mb-4">
-                  Total: {getCurrencySymbol()}{total.toFixed(2)}
-                </p>
-                <Link href="/checkout">
-                  <button className="bg-pink-600 text-white py-2 px-6 rounded">
-                    Checkout
-                  </button>
-                </Link>
-              </div>
-            </div>
+           <div className="flex flex-col md:flex-row justify-between mt-8">
+  <div className="flex flex-col items-start md:flex-row md:items-center mb-4 md:mb-0 relative w-full md:w-auto">
+    <input
+      type="text"
+      value={couponCode}
+      onChange={(e) => setCouponCode(e.target.value)}
+      onFocus={() => setShowCoupons(true)} // Show coupon list on input focus
+      placeholder="Enter coupon code"
+      className="border rounded px-3 py-2 w-full md:w-auto"
+    />
+    <button
+      onClick={handleApplyCoupon}
+      className="bg-pink-400 text-white py-2 px-6 rounded mt-4 md:mt-0 w-full md:w-auto"
+    >
+      Apply Coupon
+    </button>
+
+    {showCoupons && (
+      <ul
+        className="border rounded p-2 mt-1 bg-gray-50 dark:bg-gray-700 absolute z-10 w-full md:w-auto"
+        style={{ top: '100%', left: '0', right: '0', maxWidth: 'calc(100% - 2px)' }}
+      >
+        {coupons.map((coupon) => (
+          <li
+            key={coupon}
+            className="cursor-pointer py-1 hover:bg-gray-200 dark:hover:bg-gray-600"
+            onClick={() => handleCouponSelect(coupon)}
+          >
+            {coupon}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+
+  <div className="w-full md:w-auto">
+    <div className="text-left md:text-right mb-4 md:mb-0">
+      <p className="text-xl font-bold mb-2">
+        Subtotal: {getCurrencySymbol()}{subtotal.toFixed(2)}
+      </p>
+      {error && <p className="text-red-500 mb-2">{error}</p>}
+      {discount > 0 && (
+        <p className="text-green-500 mb-2 text-xl font-bold">
+          Discount: {getCurrencySymbol()}{discount.toFixed(2)}
+        </p>
+      )}
+      <p className="text-xl font-bold mb-4">
+        Total: {getCurrencySymbol()}{total.toFixed(2)}
+      </p>
+    </div>
+    <Link href="/checkout">
+      <button className="bg-pink-600 text-white py-2 px-6 rounded w-full md:w-auto">
+        Checkout
+      </button>
+    </Link>
+  </div>
+</div>
+
+
+
           </div>
         )}
       </div>
