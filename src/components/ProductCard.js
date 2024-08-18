@@ -34,7 +34,7 @@ export default function ProductCard({ product }) {
             <img
               src={product.image}
               alt={product.title}
-              className="w-full h-full object-contain p-2"
+              className="w-full h-full object-contain p-1"
             />
           </div>
           <div className="p-4">

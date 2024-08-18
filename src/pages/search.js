@@ -49,17 +49,18 @@ export default function SearchResults() {
           {products.length > 0 ? (
             products.map(product => (
               <div key={product.id} className="border rounded-lg overflow-hidden shadow-lg">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-48 object-cover"
-                />
+                <div className="relative h-64">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-contain p-1"
+                  />
+                </div>
                 <div className="p-4">
-                  <h3 className="text-xl font-semibold">{product.title}</h3>
-                  <p className="text-gray-700 mt-2">{product.description}</p>
+                  <h3 className="text-xl font-semibold truncate">{product.title}</h3>
                   <p className="text-xl font-bold mt-2">${product.price.toFixed(2)}</p>
                   <Link href={`/products/${product.id}`}>
-                    <div className="mt-4 inline-block bg-pink-500 text-white py-2 px-4 rounded-lg cursor-pointer">
+                    <div className="mt-4 inline-block bg-pink-500 text-white py-2 px-4 rounded-lg text-center">
                       View Details
                     </div>
                   </Link>
