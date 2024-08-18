@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch, AiFillProduct } from 'react-icons/ai';
 import { IoMdCart } from 'react-icons/io';
 import { BsSun, BsMoon } from 'react-icons/bs';
 import { FaHeart } from "react-icons/fa";
-
 
 export default function Header() {
   const { cart } = useCart();
@@ -45,7 +44,7 @@ export default function Header() {
 
         {/* Sidebar for Small Screens */}
         {isSidebarOpen && (
-          <div className="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 p-4">
+          <div className="fixed top-0 left-0 w-56 h-full bg-gradient-to-b from-custom-green via-blue-100 to-pink-200 shadow-lg z-50 p-4">
             <button
               onClick={toggleSidebar}
               className="text-red-500 text-xl absolute top-2 right-2"
@@ -53,7 +52,12 @@ export default function Header() {
               ×
             </button>
             <nav>
-              <Link href="/product">Products</Link>
+              <Link href="/product">
+                <span className="flex items-center mt-2">
+                  <AiFillProduct className="mr-2" />
+                  Products
+                </span>
+              </Link>
               <Link href="/wishlist">
                 <span className="flex items-center mt-2">
                   <FaHeart className="text-pink-500 mr-2" />
@@ -71,7 +75,7 @@ export default function Header() {
         )}
 
         {/* Logo and Search */}
-        <div className={`flex items-center flex-grow ${isSidebarOpen ? 'flex-col' : 'md:flex-row'} ${isSidebarOpen ? 'hidden' : ''}`}>
+        <div className={`flex items-center flex-grow `}>
           <Link href="/">
             <h1 className="text-xl font-bold cursor-pointer ml-2 mr-2">Poshak</h1>
           </Link>
