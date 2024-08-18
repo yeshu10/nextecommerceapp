@@ -47,25 +47,25 @@ export default function Header() {
           <div className={`fixed top-0 left-0 w-56 h-full p-4 z-50 shadow-lg ${isDarkMode ? 'bg-gray-700 text-gray-200' : 'bg-gradient-to-b from-custom-green via-blue-100 to-pink-200'}`}>
             <button
               onClick={toggleSidebar}
-              className="text-red-500 text-xl absolute top-2 right-2"
+              className="text-red-500 text-2xl absolute top-2 right-2"
             >
               ×
             </button>
-            <nav>
+            <nav className='mt-8'>
               <Link href="/product">
-                <span className="flex items-center mt-2 dark:text-gray-200">
+                <span onClick={toggleSidebar} className="flex items-center mt-2 dark:text-gray-200 text-[20px]">
                   <AiFillProduct className="mr-2" />
                   Products
                 </span>
               </Link>
               <Link href="/wishlist">
-                <span className="flex items-center mt-2 dark:text-gray-200">
+                <span onClick={toggleSidebar} className="flex items-center mt-2 dark:text-gray-200 text-[20px]">
                   <FaHeart className="text-pink-500 mr-2" />
                   Wishlist
                 </span>
               </Link>
               <Link href="/cart">
-                <span className="flex items-center mt-2 dark:text-gray-200">
+                <span onClick={toggleSidebar} className="flex items-center mt-2 dark:text-gray-200 text-[20px]">
                   <IoMdCart className="mr-2" />
                   Cart ({itemCount})
                 </span>
