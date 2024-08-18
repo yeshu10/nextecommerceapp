@@ -1,4 +1,5 @@
-import { useState , useContext  } from 'react';
+import { useState, useContext } from 'react';
+import { useRouter } from 'next/router'; // Import useRouter from next/router
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
 import { ThemeContext } from '../context/ThemeContext'; // Import ThemeContext
@@ -13,6 +14,7 @@ export default function Header() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar
   const itemCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+  const router = useRouter(); // Initialize useRouter
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -20,8 +22,9 @@ export default function Header() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Redirect or handle the search logic here
-    console.log('Searching for:', searchTerm);
+    if (searchTerm.trim()) {
+      router.push(`/search?query=${encodeURIComponent(searchTerm.trim())}`); // Redirect to search results
+    }
   };
 
   const toggleSidebar = () => {

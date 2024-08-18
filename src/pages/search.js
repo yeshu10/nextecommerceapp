@@ -10,26 +10,30 @@ export default function SearchResults() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('Search Query:', query); // Debugging line
-    if (query) {
-      setLoading(true);
-      fetch('https://fakestoreapi.com/products')
-        .then(res => res.json())
-        .then(data => {
-          console.log('Fetched Data:', data); // Debugging line
-          const filteredProducts = data.filter(product =>
-            product.title.toLowerCase().includes(query.toLowerCase())
-          );
-          console.log('Filtered Products:', filteredProducts); // Debugging line
-          setProducts(filteredProducts);
-          setLoading(false);
-        })
-        .catch(err => {
-          console.error('Fetch Error:', err); // Debugging line
-          setError(err.message);
-          setLoading(false);
-        });
+    if (!query) {
+      // No query to search for
+      setProducts([]);
+      setLoading(false);
+      return;
     }
+
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('https://fakestoreapi.com/products');
+        const data = await response.json();
+        const filteredProducts = data.filter(product =>
+          product.title.toLowerCase().includes(query.toLowerCase())
+        );
+        setProducts(filteredProducts);
+      } catch (err) {
+        setError('Failed to fetch products');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, [query]);
 
   if (loading) return <p>Loading...</p>;
@@ -55,7 +59,7 @@ export default function SearchResults() {
                   <p className="text-gray-700 mt-2">{product.description}</p>
                   <p className="text-xl font-bold mt-2">${product.price.toFixed(2)}</p>
                   <Link href={`/products/${product.id}`}>
-                    <div className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-lg cursor-pointer">
+                    <div className="mt-4 inline-block bg-pink-500 text-white py-2 px-4 rounded-lg cursor-pointer">
                       View Details
                     </div>
                   </Link>
