@@ -1,4 +1,6 @@
+import React, { useContext } from 'react';
 import ProductCard from '../components/ProductCard';
+import { ThemeContext } from '../context/ThemeContext'; // Import ThemeContext
 
 // Fetch products from the API
 export async function getStaticProps() {
@@ -14,8 +16,10 @@ export async function getStaticProps() {
 }
 
 export default function Products({ products }) {
+  const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext
+
   return (
-    <div className="container mx-auto p-4">
+    <div className={`w-full p-12 ${isDarkMode ? 'bg-gray-900 text-gray-200' : 'bg-white text-gray-900'} overflow-hidden`}>
       <header className="mb-4">
         <h1 className="text-3xl font-bold">Products</h1>
       </header>

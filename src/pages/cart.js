@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import Link from 'next/link';
+import { FaTimes } from 'react-icons/fa'; // Import the cross icon
 
 const convertCurrency = (amount, toINR) => {
   const conversionRate = toINR ? 75 : 0.013; // Example rates: 1 USD = 75 INR, 1 INR = 0.013 USD
@@ -84,9 +85,9 @@ export default function Cart() {
                 </div>
                 <button
                   onClick={() => handleRemove(item)}
-                  className="bg-red-500 text-white py-2 px-4 rounded ml-4"
+                  className="text-red-500 px-4  ml-4 "
                 >
-                  Remove
+                  <FaTimes  size={24}/>
                 </button>
               </div>
             );
