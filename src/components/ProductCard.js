@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
       <div className={`p-4 mt-auto flex items-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
         <button
           onClick={() => handleAddToCart(product)}
-          className={`text-white py-2 px-4 rounded-lg flex-1 ${isDarkMode ? 'bg-black' : 'bg-custom-green'}`}
+          className={`text-white py-2 px-4 rounded-lg flex-1 ${isDarkMode ? 'bg-black text-custom-green' : 'bg-custom-green'}`}
         >
           Add to Cart
         </button>

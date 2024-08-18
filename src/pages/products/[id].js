@@ -63,7 +63,7 @@ export default function ProductDetail({ product }) {
             <div className="flex items-center mb-4">
               <button
                 onClick={handleAddedToCart}
-                className={`py-2 px-4 rounded mr-4 ${isDarkMode ? 'bg-custom-green' : 'bg-custom-green'} text-white`}
+                className={`py-2 px-4 rounded mr-4 ${isDarkMode ? 'bg-black text-custom-green' : 'bg-custom-green'} text-white`}
               >
                 Add to Cart
               </button>

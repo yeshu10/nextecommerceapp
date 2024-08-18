@@ -61,7 +61,7 @@ export default function Wishlist() {
                 <div className={`p-4 mt-auto flex items-center justify-between ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
                   <button
                     onClick={() => handleAddToCart(item)}
-                    className={`bg-custom-green text-white py-2 px-4 rounded-lg w-full ${isDarkMode ? 'bg-black' : 'bg-custom-green'}`} // Adjust button color based on theme
+                    className={`bg-custom-green text-white py-2 px-4 rounded-lg w-full ${isDarkMode ? 'bg-black text-custom-green' : 'bg-custom-green'}`} // Adjust button color based on theme
                   >
                     Add to Cart
                   </button>
