@@ -12,7 +12,7 @@ const convertCurrency = (amount, toINR) => {
 
 export default function Wishlist() {
   const { wishlist, removeFromWishlist } = useWishlist();
-  const { addToCart, currentCurrency } = useCart();
+  const { handleAddToCart, currentCurrency } = useCart();
   const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext for dark mode
 
   const getCurrencySymbol = () => (currentCurrency === 'INR' ? '₹' : '$');
@@ -60,7 +60,7 @@ export default function Wishlist() {
                 {/* Add to Cart Button */}
                 <div className={`p-4 mt-auto flex items-center justify-between ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
                   <button
-                    onClick={() => addToCart(item)}
+                    onClick={() => handleAddToCart(item)}
                     className={`bg-custom-green text-white py-2 px-4 rounded-lg w-full ${isDarkMode ? 'bg-black' : 'bg-custom-green'}`} // Adjust button color based on theme
                   >
                     Add to Cart

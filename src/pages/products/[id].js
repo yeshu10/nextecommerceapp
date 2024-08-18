@@ -8,7 +8,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'; // Import icons
 
 export default function ProductDetail({ product }) {
   const router = useRouter();
-  const { currentCurrency, addToCart } = useCart();
+  const { currentCurrency, handleAddToCart } = useCart();
   const { addToWishlist, removeFromWishlist, wishlist } = useWishlist(); // Use WishlistContext
   const { isDarkMode } = useContext(ThemeContext); // Use ThemeContext for dark mode
 
@@ -24,9 +24,9 @@ export default function ProductDetail({ product }) {
   // Check if the product is in the wishlist
   const isFavorited = wishlist.some(item => item.id === product.id);
 
-  const handleAddToCart = () => {
+  const handleAddedToCart = () => {
     // Add the product to the cart with the correct price and quantity
-    addToCart({ ...product, quantity: 1 });
+    handleAddToCart({ ...product, quantity: 1 });
   };
 
   const toggleWishlist = () => {
@@ -62,8 +62,8 @@ export default function ProductDetail({ product }) {
             </div>
             <div className="flex items-center mb-4">
               <button
-                onClick={handleAddToCart}
-                className={`py-2 px-4 rounded mr-4 ${isDarkMode ? 'bg-custom-green' : 'bg-custom-green-light'} text-white`}
+                onClick={handleAddedToCart}
+                className={`py-2 px-4 rounded mr-4 ${isDarkMode ? 'bg-custom-green' : 'bg-custom-green'} text-white`}
               >
                 Add to Cart
               </button>
