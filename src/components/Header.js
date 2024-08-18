@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState , useContext  } from 'react';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
+import { ThemeContext } from '../context/ThemeContext'; // Import ThemeContext
 import { AiOutlineSearch, AiFillProduct } from 'react-icons/ai';
 import { IoMdCart } from 'react-icons/io';
 import { BsSun, BsMoon } from 'react-icons/bs';
@@ -8,19 +9,10 @@ import { FaHeart } from 'react-icons/fa';
 
 export default function Header() {
   const { cart } = useCart();
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext); // Use ThemeContext
   const [searchTerm, setSearchTerm] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar
   const itemCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-
-  useEffect(() => {
-    // Check for dark mode preference in localStorage
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-      setIsDarkMode(true);
-    }
-  }, []);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -30,20 +22,6 @@ export default function Header() {
     e.preventDefault();
     // Redirect or handle the search logic here
     console.log('Searching for:', searchTerm);
-  };
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => {
-      const newMode = !prevMode;
-      if (newMode) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      }
-      return newMode;
-    });
   };
 
   const toggleSidebar = () => {
