@@ -7,9 +7,11 @@ import Footer from '@/components/Footer';
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import { WishlistProvider } from '@/context/WishlistContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 function MyApp({ Component, pageProps }) {
   return (
+    <ThemeProvider>
     <CartProvider>
       <WishlistProvider>
       <div className="flex flex-col min-h-screen">
@@ -22,6 +24,7 @@ function MyApp({ Component, pageProps }) {
       </div>
       </WishlistProvider>
     </CartProvider>
+    </ThemeProvider>
   );
 }
 
